@@ -114,7 +114,7 @@ class Reader {
 
 		var h = new Map();
 
-		var ret = AObject( h, className != null ? Tools.decode(className) : null );
+		var ret = AObject( h /* , className != null ? Tools.decode(className) : null */ );
 
 		// save new object in reference table
 		complexObjectsTable.push( ret );
@@ -142,7 +142,7 @@ class Reader {
 
 		return ret;
 	}
-	
+
 	function readMap() {
 		var n:Int = readInt();  // get header
 		if( n & 1 == 0 )
@@ -210,7 +210,7 @@ class Reader {
 			a[r] = AInt( i.readInt32() );
 		}
 
-		var ret = fixed? AVector( a, "Int" ) : AArray( a );
+		var ret = fixed? AVector( a /* , "Int" */ ) : AArray( a );
 
 		complexObjectsTable.push(ret);
 
@@ -238,7 +238,7 @@ class Reader {
 			a[r] = ANumber( i.readDouble() );
 		}
 
-		var ret = fixed? AVector( a, "Number" ) : AArray( a );
+		var ret = fixed? AVector( a /* , "Number" */ ) : AArray( a );
 
 		complexObjectsTable.push(ret);
 
@@ -264,7 +264,7 @@ class Reader {
 		if( fixed )
 		{
 			a = new Vector(len);
-			ret = AVector( a, objectTypeName );
+			ret = AVector( a /* , objectTypeName */ );
 		}
 		else
 		{

@@ -35,7 +35,7 @@ class Writer {
 		this.o = o;
 		o.bigEndian = true;
 	}
-	
+
 	function writeInt( i : Int ) {
 		if (i > 0xfffffff || i < -268435456) {
 			o.writeByte(0x05);
@@ -46,7 +46,7 @@ class Writer {
 			writeUInt(i);
 		}
 	}
-	
+
 	function writeUInt( u:UInt, shiftLeft : Bool = false ) {
 		if (shiftLeft) u = (u << 1) | 0x01;
 		if (((u >> 31) & 0x01) == 1) u &= 0x1fffffff;
@@ -75,7 +75,7 @@ class Writer {
 		}
 		o.writeByte(u);
 	}
-	
+
 	function writeString( s : String ) {
 		writeUInt(s.length, true);
 		var j = 0, it = 0;
@@ -104,7 +104,7 @@ class Writer {
 				o.writeByte(j >> (6 * it));
 		}
 	}
-	
+
 	function writeObject( h : Map<String, Value>, ?size : Int ) {
 		if (size == null) o.writeByte(0x0b);
 		else writeUInt(size << 4 | 0x03);
@@ -163,9 +163,9 @@ class Writer {
 			for(f in a)
 				write(f);
 		//case AVector(v):  // TODO add vector writing support
-		case AObject(h,n):
+		case AObject(h /* ,n */ ):
 			o.writeByte(0x0a);
-			writeObject(h, n);
+			writeObject(h, /* n */ null);
 		case AXml(x):
 			o.writeByte(0x0b);
 			writeString(x.toString());
